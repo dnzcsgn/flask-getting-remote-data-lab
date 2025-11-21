@@ -7,7 +7,11 @@ class GetRequester:
         self.url = url
 
     def get_response_body(self):
-        pass
-
+        #raise an error if the request failed
+        response = requests.get(self.url)
+        response.raise_for_status()
+        return response.content
+#converting bytes to a string
     def load_json(self):
-        pass
+        raw_body = self.get_response_body()
+        return json.loads(raw_body.decode("utf-8"))
